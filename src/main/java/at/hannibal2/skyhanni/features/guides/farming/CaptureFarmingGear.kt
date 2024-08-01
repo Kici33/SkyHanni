@@ -1,4 +1,4 @@
-package at.hannibal2.skyhanni.features.garden.fortuneguide
+package at.hannibal2.skyhanni.features.guides.farming
 
 import at.hannibal2.skyhanni.config.ConfigUpdaterMigrator
 import at.hannibal2.skyhanni.config.storage.ProfileSpecificStorage
@@ -96,7 +96,7 @@ object CaptureFarmingGear {
         }
     }
 
-    // TODO upadte armor on equpment/wardeobe update as well
+    // TODO update armor on equipment/wardrobe update as well
     fun captureFarmingGear() {
         for (armor in InventoryUtils.getArmor()) {
             if (armor == null) continue

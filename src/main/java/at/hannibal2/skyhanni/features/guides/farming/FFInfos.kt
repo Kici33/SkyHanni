@@ -1,4 +1,4 @@
-package at.hannibal2.skyhanni.features.garden.fortuneguide
+package at.hannibal2.skyhanni.features.guides.farming
 
 import at.hannibal2.skyhanni.utils.GuiRenderUtils
 
@@ -136,12 +136,7 @@ internal enum class FFInfos(
         max: Number,
     ) : this(sumTo, current, { max })
 
-    constructor(
-        sumTo: FFInfos?,
-        from: () -> Map<FFTypes, Double>,
-        what: FFTypes,
-        max: Number,
-    ) : this(sumTo, { from()[what] ?: 0.0 }, { max })
+
 
     constructor(
         sumTo: FFInfos?,

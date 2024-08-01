@@ -1,6 +1,6 @@
 package at.hannibal2.skyhanni.features.garden
 
-import at.hannibal2.skyhanni.features.garden.fortuneguide.FarmingItems
+import at.hannibal2.skyhanni.features.guides.farming.FarmingItems
 import net.minecraft.block.state.IBlockState
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items

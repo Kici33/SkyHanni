@@ -1,6 +1,7 @@
-package at.hannibal2.skyhanni.features.garden.fortuneguide
+package at.hannibal2.skyhanni.features.guides.farming
 
 import at.hannibal2.skyhanni.data.ProfileStorageData
+import at.hannibal2.skyhanni.features.guides.mining.MiningGuideGUI
 import at.hannibal2.skyhanni.utils.ItemCategory
 import at.hannibal2.skyhanni.utils.RenderUtils
 import at.hannibal2.skyhanni.utils.SoundUtils
@@ -58,7 +59,7 @@ enum class FarmingItems(
                 armor.forEach {
                     it.selectedState = it == currentArmor
                 }
-                FFGuideGUI.updateDisplay()
+                MiningGuideGUI.updateDisplay()
             }
         }
 
@@ -69,7 +70,7 @@ enum class FarmingItems(
                 equip.forEach {
                     it.selectedState = it == currentEquip
                 }
-                FFGuideGUI.updateDisplay()
+                MiningGuideGUI.updateDisplay()
             }
         }
 

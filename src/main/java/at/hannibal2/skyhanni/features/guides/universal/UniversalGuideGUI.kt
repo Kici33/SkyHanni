@@ -1,10 +1,11 @@
-package at.hannibal2.skyhanni.features.garden.fortuneguide
+package at.hannibal2.skyhanni.features.guides.universal
 
 import at.hannibal2.skyhanni.SkyHanniMod
 import at.hannibal2.skyhanni.features.garden.CropType
-import at.hannibal2.skyhanni.features.garden.fortuneguide.pages.CropPage
-import at.hannibal2.skyhanni.features.garden.fortuneguide.pages.OverviewPage
-import at.hannibal2.skyhanni.features.garden.fortuneguide.pages.UpgradePage
+import at.hannibal2.skyhanni.features.guides.farming.FFStats
+import at.hannibal2.skyhanni.features.guides.farming.FarmingItems
+import at.hannibal2.skyhanni.features.guides.farming.FortuneUpgrades
+import at.hannibal2.skyhanni.features.guides.universal.pages.FortuneOverviewPage
 import at.hannibal2.skyhanni.utils.guide.GuideGUI
 import at.hannibal2.skyhanni.utils.guide.GuideTab
 import at.hannibal2.skyhanni.utils.renderables.Renderable
@@ -13,23 +14,22 @@ import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 
-class FFGuideGUI : GuideGUI<FFGuideGUI.FortuneGuidePage>(FortuneGuidePage.OVERVIEW) {
+class UniversalGuideGUI constructor(guideType: GuideType) : GuideGUI<UniversalGuideGUI.FortuneGuidePage>(UniversalGuideGUI.FortuneGuidePage.OVERVIEW) {
 
     override val sizeX = 360
     override val sizeY = 200
 
     companion object {
 
-        fun isInGui() = Minecraft.getMinecraft().currentScreen is FFGuideGUI
+        fun isInGui() = Minecraft.getMinecraft().currentScreen is UniversalGuideGUI
 
-        fun open() {
-            CaptureFarmingGear.captureFarmingGear()
-            SkyHanniMod.screenToOpen = FFGuideGUI()
+        fun open(guideType: GuideType) {
+            SkyHanniMod.screenToOpen = UniversalGuideGUI(guideType)
         }
 
         fun updateDisplay() {
             with(Minecraft.getMinecraft().currentScreen) {
-                if (this !is FFGuideGUI) return
+                if (this !is UniversalGuideGUI) return
                 this.refreshPage()
             }
         }
@@ -45,13 +45,13 @@ class FFGuideGUI : GuideGUI<FFGuideGUI.FortuneGuidePage>(FortuneGuidePage.OVERVI
         FarmingItems.setDefaultPet()
 
         pageList = mapOf(
-            FortuneGuidePage.OVERVIEW to OverviewPage(sizeX, sizeY),
-            FortuneGuidePage.CROP to CropPage({ currentCrop!! }, sizeX, sizeY),
-            FortuneGuidePage.UPGRADES to UpgradePage({ currentCrop }, sizeX, sizeY - 2),
+            FortuneGuidePage.OVERVIEW to FortuneOverviewPage(guideType, sizeX, sizeY),
+//             FortuneGuidePage.SPECIFIC to SpecificPage({ currentCrop!! }, sizeX, sizeY),
+//             FortuneGuidePage.UPGRADES to FortuneUpgradePage(guideType, { currentCrop }, sizeX, sizeY - 2),
         )
         verticalTabs = listOf(
             vTab(ItemStack(Items.gold_ingot), Renderable.string("§eBreakdown")) {
-                currentPage = if (currentCrop == null) FortuneGuidePage.OVERVIEW else FortuneGuidePage.CROP
+                currentPage = if (currentCrop == null) FortuneGuidePage.OVERVIEW else FortuneGuidePage.SPECIFIC
             },
             vTab(ItemStack(Items.map), Renderable.string("§eUpgrades")) {
                 currentPage = FortuneGuidePage.UPGRADES
@@ -88,7 +88,8 @@ class FFGuideGUI : GuideGUI<FFGuideGUI.FortuneGuidePage>(FortuneGuidePage.OVERVI
 
     enum class FortuneGuidePage {
         OVERVIEW,
-        CROP,
+        SPECIFIC,
         UPGRADES,
     }
+
 }

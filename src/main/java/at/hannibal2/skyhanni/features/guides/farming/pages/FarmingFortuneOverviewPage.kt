@@ -1,9 +1,9 @@
-package at.hannibal2.skyhanni.features.garden.fortuneguide.pages
+package at.hannibal2.skyhanni.features.guides.farming.pages
 
-import at.hannibal2.skyhanni.features.garden.fortuneguide.FFInfos
-import at.hannibal2.skyhanni.features.garden.fortuneguide.FFStats
-import at.hannibal2.skyhanni.features.garden.fortuneguide.FFTypes
-import at.hannibal2.skyhanni.features.garden.fortuneguide.FarmingItems
+import at.hannibal2.skyhanni.features.guides.farming.FFInfos
+import at.hannibal2.skyhanni.features.guides.farming.FFStats
+import at.hannibal2.skyhanni.features.guides.farming.FFTypes
+import at.hannibal2.skyhanni.features.guides.farming.FarmingItems
 import at.hannibal2.skyhanni.utils.CollectionUtils.getOrNull
 import at.hannibal2.skyhanni.utils.RenderUtils
 import at.hannibal2.skyhanni.utils.TimeUnit
@@ -11,7 +11,7 @@ import at.hannibal2.skyhanni.utils.TimeUtils.format
 import at.hannibal2.skyhanni.utils.guide.GuideTablePage
 import at.hannibal2.skyhanni.utils.renderables.Renderable
 
-class OverviewPage(sizeX: Int, sizeY: Int, paddingX: Int = 15, paddingY: Int = 7, footerSpacing: Int = 6) :
+class FarmingFortuneOverviewPage(sizeX: Int, sizeY: Int, paddingX: Int = 15, paddingY: Int = 7, footerSpacing: Int = 6) :
     GuideTablePage(
         sizeX, sizeY, paddingX, paddingY, footerSpacing,
     ) {

@@ -1,9 +1,9 @@
-package at.hannibal2.skyhanni.features.garden.fortuneguide.pages
+package at.hannibal2.skyhanni.features.guides.farming.pages
 
 import at.hannibal2.skyhanni.features.garden.CropType
-import at.hannibal2.skyhanni.features.garden.fortuneguide.FFStats
-import at.hannibal2.skyhanni.features.garden.fortuneguide.FarmingItems
-import at.hannibal2.skyhanni.features.garden.fortuneguide.FortuneStats
+import at.hannibal2.skyhanni.features.guides.farming.FFStats
+import at.hannibal2.skyhanni.features.guides.farming.FarmingItems
+import at.hannibal2.skyhanni.features.guides.farming.FortuneStats
 import at.hannibal2.skyhanni.utils.CollectionUtils.split
 import at.hannibal2.skyhanni.utils.GuiRenderUtils
 import at.hannibal2.skyhanni.utils.RenderUtils

@@ -6,7 +6,7 @@ package at.hannibal2.skyhanni.features.chroma
  *
  * **Usage:**
  *
- * If you want to use chroma for text see [FontRendererHook][at.hannibal2.skyhanni.mixins.hooks.FontRendererHook.setupChromaFont]
+ * If you want to use chroma fokr text see [FontRendererHoo][at.hannibal2.skyhanni.mixins.hooks.FontRendererHook.setupChromaFont]
  *
  * ```
  *      ChromaShaderManager.begin(ChromaType.TEXTURE)

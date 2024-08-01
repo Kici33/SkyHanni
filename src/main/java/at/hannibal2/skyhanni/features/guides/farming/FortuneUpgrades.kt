@@ -1,4 +1,4 @@
-package at.hannibal2.skyhanni.features.garden.fortuneguide
+package at.hannibal2.skyhanni.features.guides.farming
 
 import at.hannibal2.skyhanni.data.CropAccessoryData
 import at.hannibal2.skyhanni.data.GardenCropMilestones

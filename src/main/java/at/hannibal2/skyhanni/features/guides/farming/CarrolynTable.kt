@@ -1,4 +1,4 @@
-package at.hannibal2.skyhanni.features.garden.fortuneguide
+package at.hannibal2.skyhanni.features.guides.farming
 
 import at.hannibal2.skyhanni.features.garden.CropType
 import at.hannibal2.skyhanni.features.garden.GardenAPI
@@ -55,7 +55,7 @@ enum class CarrolynTable(val crop: CropType, val label: String, completeMessage:
     companion object {
         fun getByCrop(crop: CropType?) = if (crop == null) null else entries.firstOrNull { it.crop == crop }
 
-        fun isCarrolynCrop(crop: CropType): Boolean = CarrolynTable.getByCrop(crop) != null
+        fun isCarrolynCrop(crop: CropType): Boolean = getByCrop(crop) != null
         fun customTabComplete(command: String): List<String>? {
             if (command == "shcarrolyn") {
                 return entries.map { it.crop.name }

@@ -1,13 +1,13 @@
-package at.hannibal2.skyhanni.features.garden.fortuneguide
+package at.hannibal2.skyhanni.features.guides.universal
 
-enum class FFTypes {
+enum class FortuneTypes {
     TOTAL,
     BASE,
     REFORGE,
     GEMSTONE,
     ABILITY,
     ENCHANT,
-    FARMING_LVL,
+    SKILL_LEVEL,
     BESTIARY,
     PLOTS,
     ANITA,

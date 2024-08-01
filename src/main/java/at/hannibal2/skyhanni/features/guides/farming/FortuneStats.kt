@@ -1,4 +1,4 @@
-package at.hannibal2.skyhanni.features.garden.fortuneguide
+package at.hannibal2.skyhanni.features.guides.farming
 
 import at.hannibal2.skyhanni.features.garden.CropType
 import at.hannibal2.skyhanni.utils.CollectionUtils.sumOfPair
@@ -76,6 +76,5 @@ private fun carrolynToolTip(crop: CropType): String =
 private fun carrolynOnClick(crop: CropType) =
     CarrolynTable.getByCrop(crop)?.let {
         it.setVisibleActive(!it.get())
-        FFGuideGUI.updateDisplay()
     }
 

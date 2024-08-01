@@ -46,11 +46,12 @@ import at.hannibal2.skyhanni.features.garden.farming.DicerRngDropTracker
 import at.hannibal2.skyhanni.features.garden.farming.FarmingWeightDisplay
 import at.hannibal2.skyhanni.features.garden.farming.GardenStartLocation
 import at.hannibal2.skyhanni.features.garden.farming.lane.FarmingLaneCreator
-import at.hannibal2.skyhanni.features.garden.fortuneguide.CaptureFarmingGear
-import at.hannibal2.skyhanni.features.garden.fortuneguide.FFGuideGUI
+import at.hannibal2.skyhanni.features.guides.farming.CaptureFarmingGear
+import at.hannibal2.skyhanni.features.guides.mining.MiningGuideGUI
 import at.hannibal2.skyhanni.features.garden.pests.PestFinder
 import at.hannibal2.skyhanni.features.garden.pests.PestProfitTracker
 import at.hannibal2.skyhanni.features.garden.visitor.GardenVisitorDropStatistics
+import at.hannibal2.skyhanni.features.guides.farming.FarmingGuideGUI
 import at.hannibal2.skyhanni.features.inventory.chocolatefactory.ChocolateFactoryStrayTracker
 import at.hannibal2.skyhanni.features.mining.KingTalismanHelper
 import at.hannibal2.skyhanni.features.mining.MineshaftPityDisplay
@@ -59,7 +60,6 @@ import at.hannibal2.skyhanni.features.minion.MinionFeatures
 import at.hannibal2.skyhanni.features.misc.CollectionTracker
 import at.hannibal2.skyhanni.features.misc.LockMouseLook
 import at.hannibal2.skyhanni.features.misc.MarkedPlayerManager
-import at.hannibal2.skyhanni.features.misc.MiscFeatures
 import at.hannibal2.skyhanni.features.misc.discordrpc.DiscordRPCManager
 import at.hannibal2.skyhanni.features.misc.limbo.LimboTimeTracker
 import at.hannibal2.skyhanni.features.misc.massconfiguration.DefaultConfigFeatures
@@ -162,6 +162,7 @@ object Commands {
         registerCommand("sh", "Opens the main SkyHanni config", openMainMenu)
         registerCommand("skyhanni", "Opens the main SkyHanni config", openMainMenu)
         registerCommand("ff", "Opens the Farming Fortune Guide") { openFortuneGuide() }
+        registerCommand("mf", "Opens the Mining Fortune Guide") { openMiningGuide() }
         registerCommand("shcommands", "Shows this list") { HelpCommand.onCommand(it, commands) }
         registerCommand0(
             "shdefaultoptions",
@@ -171,7 +172,6 @@ object Commands {
         )
         registerCommand("shwords", "Opens the config list for modifying visual words") { openVisualWords() }
     }
-
 
     private fun usersNormal() {
         registerCommand(
@@ -588,7 +588,16 @@ object Commands {
         if (!LorenzUtils.inSkyBlock) {
             ChatUtils.userError("Join SkyBlock to open the fortune guide!")
         } else {
-            FFGuideGUI.open()
+            FarmingGuideGUI.open()
+        }
+    }
+
+    @JvmStatic
+    fun openMiningGuide() {
+        if (!LorenzUtils.inSkyBlock) {
+            ChatUtils.userError("Join SkyBlock to open the mining fortune guide!")
+        } else {
+            MiningGuideGUI.open()
         }
     }
 

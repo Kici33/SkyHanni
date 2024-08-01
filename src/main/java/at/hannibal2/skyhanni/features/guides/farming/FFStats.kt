@@ -1,4 +1,4 @@
-package at.hannibal2.skyhanni.features.garden.fortuneguide
+package at.hannibal2.skyhanni.features.guides.farming
 
 import at.hannibal2.skyhanni.data.CropAccessoryData
 import at.hannibal2.skyhanni.data.GardenCropUpgrades.getUpgradeLevel
@@ -163,7 +163,7 @@ object FFStats {
             baseFF, armorTotalFF, equipmentTotalFF, FarmingItems.currentPet.getFFData(),
         )
 
-        FFGuideGUI.updateDisplay()
+        MiningGuideGUI.updateDisplay()
     }
 
     fun List<FarmingItems>.getFFData(): Map<FFTypes, Double> = combineFFData(this.map { it.getFFData() })

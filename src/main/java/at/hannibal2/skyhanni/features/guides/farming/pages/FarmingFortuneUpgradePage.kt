@@ -1,9 +1,9 @@
-package at.hannibal2.skyhanni.features.garden.fortuneguide.pages
+package at.hannibal2.skyhanni.features.guides.farming.pages
 
 import at.hannibal2.skyhanni.features.garden.CropType
-import at.hannibal2.skyhanni.features.garden.fortuneguide.FarmingItems
-import at.hannibal2.skyhanni.features.garden.fortuneguide.FortuneUpgrade
-import at.hannibal2.skyhanni.features.garden.fortuneguide.FortuneUpgrades
+import at.hannibal2.skyhanni.features.guides.farming.FarmingItems
+import at.hannibal2.skyhanni.features.guides.farming.FortuneUpgrade
+import at.hannibal2.skyhanni.features.guides.farming.FortuneUpgrades
 import at.hannibal2.skyhanni.utils.ItemUtils.itemName
 import at.hannibal2.skyhanni.utils.NEUItems.getItemStack
 import at.hannibal2.skyhanni.utils.NumberUtil.shortFormat
@@ -13,7 +13,7 @@ import at.hannibal2.skyhanni.utils.guide.GuideScrollPage
 import at.hannibal2.skyhanni.utils.renderables.Renderable
 import java.text.DecimalFormat
 
-class UpgradePage(val crop0: () -> CropType?, sizeX: Int, sizeY: Int, paddingX: Int = 15, paddingY: Int = 7) :
+class FarmingFortuneUpgradePage(val crop0: () -> CropType?, sizeX: Int, sizeY: Int, paddingX: Int = 15, paddingY: Int = 7) :
     GuideScrollPage(
         sizeX,
         sizeY,
