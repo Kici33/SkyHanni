@@ -1,11 +1,11 @@
-package at.hannibal2.skyhanni.features.guides.universal
+package at.hannibal2.skyhanni.features.guides
 
 import at.hannibal2.skyhanni.SkyHanniMod
 import at.hannibal2.skyhanni.features.garden.CropType
 import at.hannibal2.skyhanni.features.guides.farming.FFStats
 import at.hannibal2.skyhanni.features.guides.farming.FarmingItems
 import at.hannibal2.skyhanni.features.guides.farming.FortuneUpgrades
-import at.hannibal2.skyhanni.features.guides.universal.pages.FortuneOverviewPage
+import at.hannibal2.skyhanni.features.guides.farming.pages.FortuneOverviewPage
 import at.hannibal2.skyhanni.utils.guide.GuideGUI
 import at.hannibal2.skyhanni.utils.guide.GuideTab
 import at.hannibal2.skyhanni.utils.renderables.Renderable
@@ -14,7 +14,7 @@ import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 
-class UniversalGuideGUI constructor(guideType: GuideType) : GuideGUI<UniversalGuideGUI.FortuneGuidePage>(UniversalGuideGUI.FortuneGuidePage.OVERVIEW) {
+class UniversalGuideGUI constructor(guideType: GuideType) : GuideGUI<UniversalGuideGUI.FortuneGuidePage>(FortuneGuidePage.OVERVIEW) {
 
     override val sizeX = 360
     override val sizeY = 200

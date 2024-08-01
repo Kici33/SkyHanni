@@ -1,8 +1,6 @@
-package at.hannibal2.skyhanni.features.guides.universal.pages
+package at.hannibal2.skyhanni.features.guides.farming.pages
 
-import at.hannibal2.skyhanni.features.guides.farming.FarmingItems
-import at.hannibal2.skyhanni.features.guides.universal.GuideType
-import at.hannibal2.skyhanni.utils.CollectionUtils.getOrNull
+import at.hannibal2.skyhanni.features.guides.GuideType
 import at.hannibal2.skyhanni.utils.RenderUtils
 import at.hannibal2.skyhanni.utils.guide.GuideTablePage
 import at.hannibal2.skyhanni.utils.renderables.Renderable
@@ -53,8 +51,4 @@ class FortuneOverviewPage(private val guideType: GuideType, sizeX: Int, sizeY: I
         return content to footer
     }
 
-}
-
-private fun MutableList<MutableList<Renderable>>.addTable(row: Int, r: Renderable) {
-    this.getOrNull(row)?.add(r) ?: mutableListOf(r).let { this.add(row, it) }
 }

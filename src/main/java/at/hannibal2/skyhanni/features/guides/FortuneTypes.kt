@@ -1,4 +1,4 @@
-package at.hannibal2.skyhanni.features.guides.universal
+package at.hannibal2.skyhanni.features.guides
 
 enum class FortuneTypes {
     TOTAL,

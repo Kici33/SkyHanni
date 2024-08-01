@@ -1,4 +1,7 @@
-package at.hannibal2.skyhanni.features.guides.universal
+package at.hannibal2.skyhanni.features.guides
+
+import at.hannibal2.skyhanni.features.guides.farming.FarmingFortuneInfo
+import at.hannibal2.skyhanni.features.guides.mining.MiningFortuneInfo
 
 enum class GuideType(
     private val fortuneInfo: FortuneInfo? = null,
@@ -8,7 +11,6 @@ enum class GuideType(
 
     FARMING(
         FarmingFortuneInfo(),
-
         "§6Universal Farming Fortune",
         "§7§2Farming fortune in that is\n§2applied to every crop\n§eNot the same as tab FF\n§eSee on the grass block page"
     ),

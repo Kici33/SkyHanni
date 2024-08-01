@@ -1,4 +1,4 @@
-package at.hannibal2.skyhanni.features.guides.universal
+package at.hannibal2.skyhanni.features.guides
 
 import at.hannibal2.skyhanni.utils.GuiRenderUtils
 import at.hannibal2.skyhanni.utils.renderables.Renderable

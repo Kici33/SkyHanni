@@ -1,13 +1,17 @@
-package at.hannibal2.skyhanni.features.guides.universal
+package at.hannibal2.skyhanni.features.guides.farming
 
-class MiningFortuneInfo : FortuneInfo {
+import at.hannibal2.skyhanni.api.SkillAPI
+import at.hannibal2.skyhanni.features.guides.FortuneInfo
+import at.hannibal2.skyhanni.features.skillprogress.SkillType
+
+class FarmingFortuneInfo : FortuneInfo {
     override fun getUniversal(): Int {
         return getSkillLevel() + getBestiary() + getGardenPlots() + getAnitaBuff() +
             getCommunityShop() + getCakeBuff() + getTotalArmor() + getTotalPet() + getTotalEquipment();
     }
 
     override fun getSkillLevel(): Int {
-        TODO("Not yet implemented")
+        return SkillAPI.storage?.get(SkillType.FARMING)?.level?.times(4) ?: -1
     }
 
     override fun getBestiary(): Int {

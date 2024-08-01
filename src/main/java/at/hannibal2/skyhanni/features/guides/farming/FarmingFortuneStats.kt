@@ -6,6 +6,11 @@ import at.hannibal2.skyhanni.data.ProfileStorageData
 import at.hannibal2.skyhanni.features.garden.CropType
 import at.hannibal2.skyhanni.features.garden.FarmingFortuneDisplay
 import at.hannibal2.skyhanni.features.garden.GardenAPI
+import at.hannibal2.skyhanni.features.guides.farming.CarrolynTable
+import at.hannibal2.skyhanni.features.guides.farming.FFInfos
+import at.hannibal2.skyhanni.features.guides.farming.FFTypes
+import at.hannibal2.skyhanni.features.guides.farming.FarmingItems
+import at.hannibal2.skyhanni.features.guides.farming.FortuneStats
 import at.hannibal2.skyhanni.utils.ItemUtils.getInternalName
 import at.hannibal2.skyhanni.utils.SimpleTimeMark
 import at.hannibal2.skyhanni.utils.SkyBlockItemModifierUtils.getFarmingForDummiesCount
@@ -162,8 +167,6 @@ object FFStats {
         totalBaseFF = combineFFData(
             baseFF, armorTotalFF, equipmentTotalFF, FarmingItems.currentPet.getFFData(),
         )
-
-        MiningGuideGUI.updateDisplay()
     }
 
     fun List<FarmingItems>.getFFData(): Map<FFTypes, Double> = combineFFData(this.map { it.getFFData() })
