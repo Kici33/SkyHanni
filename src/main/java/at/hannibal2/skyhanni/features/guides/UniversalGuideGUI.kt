@@ -2,10 +2,12 @@ package at.hannibal2.skyhanni.features.guides
 
 import at.hannibal2.skyhanni.SkyHanniMod
 import at.hannibal2.skyhanni.features.garden.CropType
-import at.hannibal2.skyhanni.features.guides.farming.FFStats
+import at.hannibal2.skyhanni.features.guides.farming.FarmingFortuneData
+import at.hannibal2.skyhanni.features.guides.farming.FarmingFortuneUpgrades
 import at.hannibal2.skyhanni.features.guides.farming.FarmingItems
-import at.hannibal2.skyhanni.features.guides.farming.FortuneUpgrades
-import at.hannibal2.skyhanni.features.guides.farming.pages.FortuneOverviewPage
+import at.hannibal2.skyhanni.features.guides.farming.pages.CropPage
+import at.hannibal2.skyhanni.features.guides.farming.pages.FarmingFortuneOverviewPage
+import at.hannibal2.skyhanni.features.guides.farming.pages.FarmingFortuneUpgradePage
 import at.hannibal2.skyhanni.utils.guide.GuideGUI
 import at.hannibal2.skyhanni.utils.guide.GuideTab
 import at.hannibal2.skyhanni.utils.renderables.Renderable
@@ -36,44 +38,65 @@ class UniversalGuideGUI constructor(guideType: GuideType) : GuideGUI<UniversalGu
     }
 
     /** Value for which crop page is active */
-    private var currentCrop: CropType? = null
 
     init {
-        FFStats.loadFFData()
-        FortuneUpgrades.generateGenericUpgrades()
 
         FarmingItems.setDefaultPet()
 
-        pageList = mapOf(
-            FortuneGuidePage.OVERVIEW to FortuneOverviewPage(guideType, sizeX, sizeY),
-//             FortuneGuidePage.SPECIFIC to SpecificPage({ currentCrop!! }, sizeX, sizeY),
-//             FortuneGuidePage.UPGRADES to FortuneUpgradePage(guideType, { currentCrop }, sizeX, sizeY - 2),
-        )
-        verticalTabs = listOf(
-            vTab(ItemStack(Items.gold_ingot), Renderable.string("§eBreakdown")) {
-                currentPage = if (currentCrop == null) FortuneGuidePage.OVERVIEW else FortuneGuidePage.SPECIFIC
-            },
-            vTab(ItemStack(Items.map), Renderable.string("§eUpgrades")) {
-                currentPage = FortuneGuidePage.UPGRADES
-            })
-        horizontalTabs = buildList {
-            add(
-                hTab(ItemStack(Blocks.grass), Renderable.string("§eOverview")) {
-                    currentCrop = null
+        when (guideType) {
+            GuideType.FARMING -> {
+                FarmingFortuneData.loadFFData()
+                FarmingFortuneUpgrades.generateGenericUpgrades()
 
-                    it.pageSwitchHorizontal()
-                }
-            )
-            for (crop in CropType.entries) {
-                add(
-                    hTab(crop.icon, Renderable.string("§e${crop.cropName}")) {
-                        currentCrop = crop
+                 var currentCrop: CropType? = null
 
-                        it.pageSwitchHorizontal()
+                pageList = mapOf(
+                    FortuneGuidePage.OVERVIEW to FarmingFortuneOverviewPage(sizeX, sizeY),
+                    FortuneGuidePage.SPECIFIC to CropPage({ currentCrop!! }, sizeX, sizeY),
+                    FortuneGuidePage.UPGRADES to FarmingFortuneUpgradePage({ currentCrop }, sizeX, sizeY - 2),
+                )
+
+                verticalTabs = listOf(
+                    vTab(ItemStack(Items.gold_ingot), Renderable.string("§eBreakdown")) {
+                        currentPage = if (currentCrop == null) FortuneGuidePage.OVERVIEW else FortuneGuidePage.SPECIFIC
+                    },
+                    vTab(ItemStack(Items.map), Renderable.string("§eUpgrades")) {
+                        currentPage = FortuneGuidePage.UPGRADES
+                    })
+
+                horizontalTabs = buildList {
+                    add(
+                        hTab(ItemStack(Blocks.grass), Renderable.string("§eOverview")) {
+                            currentCrop = null
+
+                            it.pageSwitchHorizontal()
+                        }
+                    )
+                    for (crop in CropType.entries) {
+                        add(
+                            hTab(crop.icon, Renderable.string("§e${crop.cropName}")) {
+                                currentCrop = crop
+
+                                it.pageSwitchHorizontal()
+                            }
+                        )
                     }
+                }
+            }
+
+            GuideType.MINING -> {
+                pageList = mapOf(
+//                     FortuneGuidePage.OVERVIEW to MiningFortuneOverviewPage(sizeX, sizeY)
+//                     FortuneGuidePage.SPECIFIC to OrePage(sizeX, sizeY),
+//                     FortuneGuidePage.UPGRADES to MiningFortuneUpgradePage(guideType, sizeX, sizeY - 2),
                 )
             }
+
+            GuideType.FORAGING -> TODO()
+            GuideType.FISHING -> TODO()
+            GuideType.MAGIC_FIND -> TODO()
         }
+
         horizontalTabs.firstOrNull()?.fakeClick()
         verticalTabs.firstOrNull()?.fakeClick()
     }

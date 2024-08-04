@@ -21,10 +21,10 @@ import at.hannibal2.skyhanni.features.garden.composter.ComposterOverlay
 import at.hannibal2.skyhanni.features.garden.contest.FarmingContestAPI
 import at.hannibal2.skyhanni.features.garden.farming.GardenBestCropTime
 import at.hannibal2.skyhanni.features.garden.farming.GardenCropSpeed
-import at.hannibal2.skyhanni.features.guides.mining.MiningGuideGUI
 import at.hannibal2.skyhanni.features.guides.farming.FarmingItems
 import at.hannibal2.skyhanni.features.garden.inventory.SkyMartCopperPrice
 import at.hannibal2.skyhanni.features.garden.visitor.VisitorAPI
+import at.hannibal2.skyhanni.features.guides.UniversalGuideGUI
 import at.hannibal2.skyhanni.features.inventory.chocolatefactory.ChocolateFactoryAPI
 import at.hannibal2.skyhanni.features.inventory.chocolatefactory.ChocolateShopPrice
 import at.hannibal2.skyhanni.skyhannimodule.SkyHanniModule
@@ -191,7 +191,7 @@ object GardenAPI {
 
     fun hideExtraGuis() = ComposterOverlay.inInventory || AnitaMedalProfit.inInventory ||
         SkyMartCopperPrice.inInventory || FarmingContestAPI.inInventory || VisitorAPI.inInventory ||
-        MiningGuideGUI.isInGui() || ChocolateShopPrice.inInventory || ChocolateFactoryAPI.inChocolateFactory ||
+        UniversalGuideGUI.isInGui() || ChocolateShopPrice.inInventory || ChocolateFactoryAPI.inChocolateFactory ||
         ChocolateFactoryAPI.chocolateFactoryPaused || HoppityCollectionStats.inInventory
 
     fun clearCropSpeed() {

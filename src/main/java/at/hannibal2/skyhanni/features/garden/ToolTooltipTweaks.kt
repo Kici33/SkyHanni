@@ -5,7 +5,7 @@ import at.hannibal2.skyhanni.config.features.garden.TooltipTweaksConfig.CropTool
 import at.hannibal2.skyhanni.events.LorenzToolTipEvent
 import at.hannibal2.skyhanni.features.garden.FarmingFortuneDisplay.getAbilityFortune
 import at.hannibal2.skyhanni.features.garden.GardenAPI.getCropType
-import at.hannibal2.skyhanni.features.guides.mining.MiningGuideGUI
+import at.hannibal2.skyhanni.features.guides.UniversalGuideGUI
 import at.hannibal2.skyhanni.skyhannimodule.SkyHanniModule
 import at.hannibal2.skyhanni.utils.ConfigUtils
 import at.hannibal2.skyhanni.utils.ItemUtils.getInternalName
@@ -111,7 +111,7 @@ object ToolTooltipTweaks {
                 }
             }
             // Beware, dubious control flow beyond these lines
-            if (config.compactToolTooltips || MiningGuideGUI.isInGui()) {
+            if (config.compactToolTooltips || UniversalGuideGUI.isInGui()) {
                 if (line.startsWith("§5§o§7§8Bonus ")) removingFarmhandDescription = true
                 if (removingFarmhandDescription) {
                     iterator.remove()
@@ -130,7 +130,7 @@ object ToolTooltipTweaks {
                 }
                 if (line == "§5§o§9Bountiful Bonus") removingReforgeDescription = true
 
-                if (MiningGuideGUI.isInGui()) {
+                if (UniversalGuideGUI.isInGui()) {
                     if (line.contains("Click to ") || line.contains("§7§8This item can be reforged!") || line.contains("Dyed")) {
                         iterator.remove()
                     }
