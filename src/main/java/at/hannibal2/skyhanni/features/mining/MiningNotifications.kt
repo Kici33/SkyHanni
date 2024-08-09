@@ -109,4 +109,5 @@ object MiningNotifications {
         LorenzUtils.sendTitle(type.notification, 1500.milliseconds)
         if (config.playSound) SoundUtils.playPlingSound()
     }
+
 }

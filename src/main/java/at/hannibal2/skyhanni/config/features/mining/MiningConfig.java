@@ -69,6 +69,11 @@ public class MiningConfig {
     public MineshaftConfig mineshaft = new MineshaftConfig();
 
     @Expose
+    @ConfigOption(name = "Mining Fortune Display", desc = "")
+    @Accordion
+    public MiningFortuneConfig miningFortunes = new MiningFortuneConfig();
+
+    @Expose
     @ConfigOption(name = "Mineshaft Pity Display", desc = "")
     @Accordion
     public MineshaftPityDisplayConfig mineshaftPityDisplay = new MineshaftPityDisplayConfig();

@@ -1,31 +1,41 @@
 package at.hannibal2.skyhanni.data
 
+import at.hannibal2.skyhanni.SkyHanniMod
+import at.hannibal2.skyhanni.api.event.HandleEvent
 import at.hannibal2.skyhanni.events.BlockClickEvent
 import at.hannibal2.skyhanni.events.ColdUpdateEvent
 import at.hannibal2.skyhanni.events.DebugDataCollectEvent
 import at.hannibal2.skyhanni.events.LorenzChatEvent
 import at.hannibal2.skyhanni.events.LorenzTickEvent
 import at.hannibal2.skyhanni.events.LorenzWorldChangeEvent
+import at.hannibal2.skyhanni.events.MiningToolChangeEvent
 import at.hannibal2.skyhanni.events.PlaySoundEvent
 import at.hannibal2.skyhanni.events.ScoreboardUpdateEvent
 import at.hannibal2.skyhanni.events.ServerBlockChangeEvent
+import at.hannibal2.skyhanni.events.minecraft.packet.PacketSentEvent
 import at.hannibal2.skyhanni.events.mining.OreMinedEvent
 import at.hannibal2.skyhanni.events.player.PlayerDeathEvent
 import at.hannibal2.skyhanni.features.gui.customscoreboard.ScoreboardPattern
 import at.hannibal2.skyhanni.features.mining.OreBlock
+import at.hannibal2.skyhanni.features.mining.OreType
 import at.hannibal2.skyhanni.skyhannimodule.SkyHanniModule
 import at.hannibal2.skyhanni.utils.CollectionUtils.countBy
+import at.hannibal2.skyhanni.utils.InventoryUtils
+import at.hannibal2.skyhanni.utils.ItemUtils.getInternalName
 import at.hannibal2.skyhanni.utils.LocationUtils.distanceToPlayer
 import at.hannibal2.skyhanni.utils.LorenzUtils
 import at.hannibal2.skyhanni.utils.LorenzUtils.inAnyIsland
 import at.hannibal2.skyhanni.utils.LorenzUtils.isInIsland
 import at.hannibal2.skyhanni.utils.LorenzVec
+import at.hannibal2.skyhanni.utils.NEUInternalName
 import at.hannibal2.skyhanni.utils.RegexUtils.matchFirst
 import at.hannibal2.skyhanni.utils.RegexUtils.matches
 import at.hannibal2.skyhanni.utils.SimpleTimeMark
 import at.hannibal2.skyhanni.utils.TimeUtils.format
 import at.hannibal2.skyhanni.utils.repopatterns.RepoPattern
 import net.minecraft.init.Blocks
+import net.minecraft.item.ItemStack
+import net.minecraft.network.play.client.C09PacketHeldItemChange
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.math.absoluteValue
 import kotlin.time.Duration.Companion.milliseconds
@@ -47,6 +57,8 @@ object MiningAPI {
     )
 
     private data class MinedBlock(val ore: OreBlock, var confirmed: Boolean, val time: SimpleTimeMark = SimpleTimeMark.now())
+
+    val config get() = SkyHanniMod.feature.mining
 
     private var lastInitSound = SimpleTimeMark.farPast()
 
@@ -245,6 +257,22 @@ object MiningAPI {
         waitingForEffMinerBlock = false
     }
 
+    @HandleEvent(onlyOnIsland = IslandType.GOLD_MINES)
+    fun onSendPacketGoldMines(event: PacketSentEvent) {
+        onSendPacket(event)
+    }
+
+    @HandleEvent(onlyOnIsland = IslandType.CRYSTAL_HOLLOWS)
+    fun onSendPacketCrystalHollows(event: PacketSentEvent) {
+        onSendPacket(event)
+    }
+
+    @HandleEvent(onlyOnIsland = IslandType.DWARVEN_MINES)
+    fun onSendPacket(event: PacketSentEvent) {
+        if (event.packet !is C09PacketHeldItemChange) return
+        checkItemInHand()
+    }
+
     @SubscribeEvent
     fun onDebugDataCollect(event: DebugDataCollectEvent) {
         event.title("Mining API")
@@ -276,6 +304,11 @@ object MiningAPI {
         cold = newCold
     }
 
+    fun ItemStack.getOreType(): OreType? {
+        val internalName = getInternalName()
+        return OreType.entries.firstOrNull { internalName.startsWith(it.oreName) }
+    }
+
     private fun updateLocation() {
         val currentArea = LorenzUtils.skyBlockArea
         // TODO add area change event with HypixelData.skyBlockArea instead
@@ -290,5 +323,29 @@ object MiningAPI {
         inSpidersDen = IslandType.SPIDER_DEN.isInIsland()
 
         currentAreaOreBlocks = OreBlock.entries.filter { it.checkArea() }.toSet()
+    }
+
+    var toolInHand: String? = null
+    var itemInHand: ItemStack? = null
+
+    private fun checkItemInHand() {
+        val toolItem = InventoryUtils.getItemInHand()
+        val crop = toolItem?.getOreType()
+        val newTool = getToolInHand(toolItem, crop)
+        if (toolInHand != newTool) {
+            toolInHand = newTool
+            itemInHand = toolItem
+            updateMiningTool()
+        }
+    }
+
+    private fun updateMiningTool() {
+        MiningToolChangeEvent(itemInHand).postAndCatch()
+    }
+
+    private fun getToolInHand(toolItem: ItemStack?, crop: OreType?): String? {
+        if (crop != null) return crop.name
+
+        return toolItem?.getInternalName()?.asString() ?: return null
     }
 }

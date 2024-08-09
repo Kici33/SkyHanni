@@ -8,6 +8,9 @@ import at.hannibal2.skyhanni.features.guides.farming.FarmingItems
 import at.hannibal2.skyhanni.features.guides.farming.pages.CropPage
 import at.hannibal2.skyhanni.features.guides.farming.pages.FarmingFortuneOverviewPage
 import at.hannibal2.skyhanni.features.guides.farming.pages.FarmingFortuneUpgradePage
+import at.hannibal2.skyhanni.features.guides.mining.MiningFortuneData
+import at.hannibal2.skyhanni.features.guides.mining.pages.MiningFortuneOverviewPage
+import at.hannibal2.skyhanni.features.mining.OreType
 import at.hannibal2.skyhanni.utils.guide.GuideGUI
 import at.hannibal2.skyhanni.utils.guide.GuideTab
 import at.hannibal2.skyhanni.utils.renderables.Renderable
@@ -85,11 +88,34 @@ class UniversalGuideGUI constructor(guideType: GuideType) : GuideGUI<UniversalGu
             }
 
             GuideType.MINING -> {
+
+                var currentOre: OreType? = null
+
+                MiningFortuneData.loadMFData()
+                //TODO
+//                 MiningFortuneUpgrades.generateGenericUpgrades()
                 pageList = mapOf(
-//                     FortuneGuidePage.OVERVIEW to MiningFortuneOverviewPage(sizeX, sizeY)
+                    FortuneGuidePage.OVERVIEW to MiningFortuneOverviewPage(sizeX, sizeY)
 //                     FortuneGuidePage.SPECIFIC to OrePage(sizeX, sizeY),
 //                     FortuneGuidePage.UPGRADES to MiningFortuneUpgradePage(guideType, sizeX, sizeY - 2),
                 )
+
+                verticalTabs = listOf(
+                    vTab(ItemStack(Items.gold_ingot), Renderable.string("§eBreakdown")) {
+                        currentPage = FortuneGuidePage.OVERVIEW
+                    },
+                    vTab(ItemStack(Items.map), Renderable.string("§eUpgrades")) {
+                        currentPage = FortuneGuidePage.UPGRADES
+                    })
+
+                horizontalTabs = buildList {
+                    add(
+                        hTab(ItemStack(Items.iron_pickaxe), Renderable.string("§eOverview")) {
+                            currentOre = null
+                            it.pageSwitchHorizontal()
+                        }
+                    )
+                }
             }
 
             GuideType.FORAGING -> TODO()

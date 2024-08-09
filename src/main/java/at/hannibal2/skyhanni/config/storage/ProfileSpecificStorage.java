@@ -28,6 +28,7 @@ import at.hannibal2.skyhanni.features.guides.farming.FarmingItems;
 import at.hannibal2.skyhanni.features.garden.pests.PestProfitTracker;
 import at.hannibal2.skyhanni.features.garden.pests.VinylType;
 import at.hannibal2.skyhanni.features.garden.visitor.VisitorReward;
+import at.hannibal2.skyhanni.features.guides.mining.MiningItems;
 import at.hannibal2.skyhanni.features.inventory.chocolatefactory.ChocolateFactoryStrayTracker;
 import at.hannibal2.skyhanni.features.inventory.wardrobe.WardrobeAPI;
 import at.hannibal2.skyhanni.features.mining.MineshaftPityDisplay;
@@ -538,6 +539,22 @@ public class ProfileSpecificStorage {
             @Expose
             public Long total;
         }
+
+        @Expose
+        public MiningFortune fortune = new MiningFortune();
+
+        public static class MiningFortune {
+            @Expose
+            public Map<MiningItems, Boolean> outdatedItems = new HashMap<>();
+
+            @Expose
+            public Map<MiningItems, ItemStack> miningItems = new HashMap<>();
+
+            @Expose
+            public int miningLevel = -1;
+        }
+
+
 
         @Expose
         public int tokens;

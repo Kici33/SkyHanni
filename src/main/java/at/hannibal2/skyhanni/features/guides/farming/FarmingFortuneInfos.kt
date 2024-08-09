@@ -27,9 +27,9 @@ internal enum class FarmingFortuneInfos(
     ANITA_BUFF(UNIVERSAL, { FarmingFortuneData.baseFF }, FortuneTypes.ANITA, 60),
     COMMUNITY_SHOP(UNIVERSAL, { FarmingFortuneData.baseFF }, FortuneTypes.COMMUNITY_SHOP, 40),
     CAKE_BUFF(UNIVERSAL, { FarmingFortuneData.baseFF }, FortuneTypes.CAKE, 5),
-    TOTAL_ARMOR(UNIVERSAL, { FarmingItems.currentArmor?.getFFData() ?: FarmingFortuneData.armorTotalFF }, FortuneTypes.TOTAL),
+    TOTAL_ARMOR(UNIVERSAL, { FarmingItems.currentArmor?.getFortuneData() ?: FarmingFortuneData.armorTotalFF }, FortuneTypes.TOTAL),
     BASE_ARMOR(
-        TOTAL_ARMOR, { FarmingItems.currentArmor?.getFFData() ?: FarmingFortuneData.armorTotalFF }, FortuneTypes.BASE,
+        TOTAL_ARMOR, { FarmingItems.currentArmor?.getFortuneData() ?: FarmingFortuneData.armorTotalFF }, FortuneTypes.BASE,
         {
             when (FarmingItems.currentArmor) {
                 FarmingItems.HELMET -> 30
@@ -40,7 +40,7 @@ internal enum class FarmingFortuneInfos(
         },
     ),
     ABILITY_ARMOR(
-        TOTAL_ARMOR, { FarmingItems.currentArmor?.getFFData() ?: FarmingFortuneData.armorTotalFF }, FortuneTypes.ABILITY,
+        TOTAL_ARMOR, { FarmingItems.currentArmor?.getFortuneData() ?: FarmingFortuneData.armorTotalFF }, FortuneTypes.ABILITY,
         {
             when (FarmingItems.currentArmor) {
                 FarmingItems.HELMET, FarmingItems.CHESTPLATE, FarmingItems.LEGGINGS -> if (FarmingFortuneData.usingSpeedBoots) 16.667 else 18.75
@@ -50,7 +50,7 @@ internal enum class FarmingFortuneInfos(
         },
     ),
     REFORGE_ARMOR(
-        TOTAL_ARMOR, { FarmingItems.currentArmor?.getFFData() ?: FarmingFortuneData.armorTotalFF }, FortuneTypes.REFORGE,
+        TOTAL_ARMOR, { FarmingItems.currentArmor?.getFortuneData() ?: FarmingFortuneData.armorTotalFF }, FortuneTypes.REFORGE,
         {
             when (FarmingItems.currentArmor) {
                 FarmingItems.HELMET, FarmingItems.CHESTPLATE, FarmingItems.LEGGINGS -> 30
@@ -61,13 +61,13 @@ internal enum class FarmingFortuneInfos(
     ),
     ENCHANT_ARMOR(
         sumTo = TOTAL_ARMOR,
-        from = { FarmingItems.currentArmor?.getFFData() ?: FarmingFortuneData.armorTotalFF },
+        from = { FarmingItems.currentArmor?.getFortuneData() ?: FarmingFortuneData.armorTotalFF },
         what = FortuneTypes.ENCHANT,
         x4 = { FarmingItems.currentArmor == null },
         max = 5,
     ),
     GEMSTONE_ARMOR(
-        TOTAL_ARMOR, { FarmingItems.currentArmor?.getFFData() ?: FarmingFortuneData.armorTotalFF }, FortuneTypes.GEMSTONE,
+        TOTAL_ARMOR, { FarmingItems.currentArmor?.getFortuneData() ?: FarmingFortuneData.armorTotalFF }, FortuneTypes.GEMSTONE,
         {
             when (FarmingItems.currentArmor) {
                 FarmingItems.HELMET, FarmingItems.CHESTPLATE, FarmingItems.LEGGINGS -> 20
@@ -76,9 +76,9 @@ internal enum class FarmingFortuneInfos(
             }
         },
     ),
-    TOTAL_PET(UNIVERSAL, { FarmingItems.currentPet.getFFData() }, FortuneTypes.TOTAL),
+    TOTAL_PET(UNIVERSAL, { FarmingItems.currentPet.getFortuneData() }, FortuneTypes.TOTAL),
     PET_BASE(
-        TOTAL_PET, { FarmingItems.currentPet.getFFData() }, FortuneTypes.BASE,
+        TOTAL_PET, { FarmingItems.currentPet.getFortuneData() }, FortuneTypes.BASE,
         {
             when (FarmingItems.currentPet) {
                 FarmingItems.ELEPHANT -> 150
@@ -89,36 +89,36 @@ internal enum class FarmingFortuneInfos(
             }
         },
     ),
-    PET_ITEM(TOTAL_PET, { FarmingItems.currentPet.getFFData() }, FortuneTypes.PET_ITEM, 60),
+    PET_ITEM(TOTAL_PET, { FarmingItems.currentPet.getFortuneData() }, FortuneTypes.PET_ITEM, 60),
     TOTAL_EQUIP(
         sumTo = UNIVERSAL,
-        from = { FarmingItems.currentEquip?.getFFData() ?: FarmingFortuneData.equipmentTotalFF },
+        from = { FarmingItems.currentEquip?.getFortuneData() ?: FarmingFortuneData.equipmentTotalFF },
         what = FortuneTypes.TOTAL,
     ),
     BASE_EQUIP(
         sumTo = TOTAL_EQUIP,
-        from = { FarmingItems.currentEquip?.getFFData() ?: FarmingFortuneData.equipmentTotalFF },
+        from = { FarmingItems.currentEquip?.getFortuneData() ?: FarmingFortuneData.equipmentTotalFF },
         what = FortuneTypes.BASE,
         x4 = { FarmingItems.currentEquip == null },
         max = 5.0,
     ),
     ABILITY_EQUIP(
         sumTo = TOTAL_EQUIP,
-        from = { FarmingItems.currentEquip?.getFFData() ?: FarmingFortuneData.equipmentTotalFF },
+        from = { FarmingItems.currentEquip?.getFortuneData() ?: FarmingFortuneData.equipmentTotalFF },
         what = FortuneTypes.ABILITY,
         x4 = { FarmingItems.currentEquip == null },
         max = 15.0,
     ),
     REFORGE_EQUIP(
         sumTo = TOTAL_EQUIP,
-        from = { FarmingItems.currentEquip?.getFFData() ?: FarmingFortuneData.equipmentTotalFF },
+        from = { FarmingItems.currentEquip?.getFortuneData() ?: FarmingFortuneData.equipmentTotalFF },
         what = FortuneTypes.REFORGE,
         x4 = { FarmingItems.currentEquip == null },
         max = 15.0,
     ),
     ENCHANT_EQUIP(
         sumTo = TOTAL_EQUIP,
-        from = { FarmingItems.currentEquip?.getFFData() ?: FarmingFortuneData.equipmentTotalFF },
+        from = { FarmingItems.currentEquip?.getFortuneData() ?: FarmingFortuneData.equipmentTotalFF },
         what = FortuneTypes.ENCHANT,
         x4 = { FarmingItems.currentEquip == null },
         max = { at.hannibal2.skyhanni.features.garden.GardenAPI.totalAmountVisitorsExisting.toDouble() / 4.0 },

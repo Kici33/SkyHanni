@@ -40,12 +40,12 @@ class MiningFortuneOverviewPage(sizeX: Int, sizeY: Int, paddingX: Int = 15, padd
             MiningFortuneInfos.MINING_LEVEL.bar(
                 "§2Mining Level",
                 if (FortuneTypes.SKILL_LEVEL.notSaved()) "§cMining level not saved\n§eOpen /skills to set it!"
-                else "§7§2Fortune for levelling your farming skill\n§2You get 4☘ per farming level",
+                else "§7§2Fortune for levelling your mining skill\n§2You get 4☘ per mining level",
             ),
         )
 
         content.addTable(
-            6,
+            2,
             MiningFortuneInfos.CAKE_BUFF.bar(
                 "§2Cake Buff",
                 when {
@@ -61,6 +61,14 @@ class MiningFortuneOverviewPage(sizeX: Int, sizeY: Int, paddingX: Int = 15, padd
                 },
             ),
         )
+
+        content.addTable(3, MiningFortuneInfos.HOTM.bar(
+            "§2Heart of the Mountain",
+            "§7§2Fortune from Heart of the Mountain\n§2You can get a maximum of 550☘ from HOTM",
+        ))
+
+        content.addTable(4, Renderable.placeholder(90))
+        content.addTable(5, Renderable.placeholder(90))
 
         val moreInfo = "§2Select a piece for more info"
         val wordArmor = if (MiningItems.currentArmor == null) "Armor" else "Piece"
@@ -84,17 +92,10 @@ class MiningFortuneOverviewPage(sizeX: Int, sizeY: Int, paddingX: Int = 15, padd
             ),
         )
 
-        content.addTable(
-            3,
-            MiningFortuneInfos.ABILITY_ARMOR.bar(
-                "§2$wordArmor Ability",
-                if (MiningItems.currentArmor == null) "§7§2The fortune from your armor's ability\n$moreInfo"
-                else "§7§2Ability fortune from your\n$armorName",
-            ),
-        )
+
 
         content.addTable(
-            4,
+            3,
             MiningFortuneInfos.REFORGE_ARMOR.bar(
                 "§2$wordArmor Reforge",
                 if (MiningItems.currentArmor == null) "§7§2The fortune from your armor's reforge\n$moreInfo"
@@ -102,17 +103,9 @@ class MiningFortuneOverviewPage(sizeX: Int, sizeY: Int, paddingX: Int = 15, padd
             ),
         )
 
-        content.addTable(
-            5,
-            MiningFortuneInfos.ENCHANT_ARMOR.bar(
-                "§2$wordArmor Enchantment",
-                if (MiningItems.currentArmor == null) "§7§2The fortune from your armor's enchantments\n$moreInfo"
-                else "§7§2Enchantment fortune from your\n$armorName",
-            ),
-        )
 
         content.addTable(
-            6,
+            4,
             MiningFortuneInfos.GEMSTONE_ARMOR.bar(
                 "§2$wordArmor Gemstones",
                 if (MiningItems.currentArmor == null) "§7§2The fortune from your armor's gemstones\n$moreInfo"
@@ -160,14 +153,14 @@ class MiningFortuneOverviewPage(sizeX: Int, sizeY: Int, paddingX: Int = 15, padd
             ),
         )
 
-        content.addTable(
-            5,
-            MiningFortuneInfos.ENCHANT_EQUIP.bar(
-                "§2$wordEquip Enchantment",
-                if (MiningItems.currentEquip == null) "§7§2The fortune from your equipment's enchantments\n$moreInfo"
-                else "§7§2Enchantment fortune from your\n$equipmentName",
-            ),
-        )
+//         content.addTable(
+//             5,
+//             MiningFortuneInfos.ENCHANT_EQUIP.bar(
+//                 "§2$wordEquip Enchantment",
+//                 if (MiningItems.currentEquip == null) "§7§2The fortune from your equipment's enchantments\n$moreInfo"
+//                 else "§7§2Enchantment fortune from your\n$equipmentName",
+//             ),
+//         )
 
         footer.add(
             Renderable.horizontalContainer(
@@ -232,7 +225,7 @@ class MiningFortuneOverviewPage(sizeX: Int, sizeY: Int, paddingX: Int = 15, padd
         return content to footer
     }
 
-    private fun FortuneTypes.notSaved(): Boolean = MiningFortuneData.baseFF[this]?.let {
+    private fun FortuneTypes.notSaved(): Boolean = MiningFortuneData.baseMF[this]?.let {
         it < 0.0
     } ?: true
 }

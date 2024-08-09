@@ -1,7 +1,6 @@
 package at.hannibal2.skyhanni.features.guides.mining
 
 import at.hannibal2.skyhanni.features.guides.FortuneTypes
-import at.hannibal2.skyhanni.features.guides.farming.FarmingFortuneInfos
 import at.hannibal2.skyhanni.utils.GuiRenderUtils
 
 internal enum class MiningFortuneInfos(
@@ -10,7 +9,7 @@ internal enum class MiningFortuneInfos(
     private val maxF: (MiningFortuneInfos) -> Number,
 ) {
     UNIVERSAL(
-        null, { MiningFortuneData.totalBaseFF }, FortuneTypes.TOTAL,
+        null, { MiningFortuneData.totalBaseMF }, FortuneTypes.TOTAL,
         {
             val backupArmor = MiningItems.currentArmor
             val backupEquip = MiningItems.currentEquip
@@ -22,108 +21,79 @@ internal enum class MiningFortuneInfos(
             total
         },
     ),
-    MINING_LEVEL(UNIVERSAL, { MiningFortuneData.baseFF }, FortuneTypes.SKILL_LEVEL, 240),
-    CAKE_BUFF(UNIVERSAL, { MiningFortuneData.baseFF }, FortuneTypes.CAKE, 5),
-    TOTAL_ARMOR(UNIVERSAL, { MiningItems.currentArmor?.getFFData() ?: MiningFortuneData.armorTotalFF },
+    MINING_LEVEL(UNIVERSAL, { MiningFortuneData.baseMF }, FortuneTypes.SKILL_LEVEL, 240),
+    CAKE_BUFF(UNIVERSAL, { MiningFortuneData.baseMF }, FortuneTypes.CAKE, 5),
+    HOTM(UNIVERSAL, { MiningFortuneData.baseMF }, FortuneTypes.HOTM, 550),
+    TOTAL_ARMOR(UNIVERSAL, { MiningItems.currentArmor?.getFortuneData() ?: MiningFortuneData.armorTotalMF },
         FortuneTypes.TOTAL
     ),
     BASE_ARMOR(
-        TOTAL_ARMOR, { MiningItems.currentArmor?.getFFData() ?: MiningFortuneData.armorTotalFF }, FortuneTypes.BASE,
+        TOTAL_ARMOR, { MiningItems.currentArmor?.getFortuneData() ?: MiningFortuneData.armorTotalMF }, FortuneTypes.BASE,
         {
             when (MiningItems.currentArmor) {
-                MiningItems.HELMET -> 30
-                MiningItems.CHESTPLATE, MiningItems.LEGGINGS -> 35
-                MiningItems.BOOTS -> if (MiningFortuneData.usingSpeedBoots) 60 else 30
-                else -> if (MiningFortuneData.usingSpeedBoots) 160 else 130
-            }
-        },
-    ),
-    ABILITY_ARMOR(
-        TOTAL_ARMOR, { MiningItems.currentArmor?.getFFData() ?: MiningFortuneData.armorTotalFF },
-        FortuneTypes.ABILITY,
-        {
-            when (MiningItems.currentArmor) {
-                MiningItems.HELMET, MiningItems.CHESTPLATE, MiningItems.LEGGINGS -> if (MiningFortuneData.usingSpeedBoots) 16.667 else 18.75
-                MiningItems.BOOTS -> if (MiningFortuneData.usingSpeedBoots) 0 else 18.75
-                else -> if (MiningFortuneData.usingSpeedBoots) 50 else 75
+                MiningItems.HELMET,  MiningItems.CHESTPLATE, MiningItems.LEGGINGS, MiningItems.BOOTS -> 30
+                else -> 120
             }
         },
     ),
     REFORGE_ARMOR(
-        TOTAL_ARMOR, { MiningItems.currentArmor?.getFFData() ?: MiningFortuneData.armorTotalFF },
+        TOTAL_ARMOR, { MiningItems.currentArmor?.getFortuneData() ?: MiningFortuneData.armorTotalMF },
         FortuneTypes.REFORGE,
         {
             when (MiningItems.currentArmor) {
-                MiningItems.HELMET, MiningItems.CHESTPLATE, MiningItems.LEGGINGS -> 30
-                MiningItems.BOOTS -> if (MiningFortuneData.usingSpeedBoots) 25 else 30
-                else -> if (MiningFortuneData.usingSpeedBoots) 115 else 120
+                MiningItems.HELMET, MiningItems.CHESTPLATE, MiningItems.LEGGINGS, MiningItems.BOOTS -> 30
+                else -> 120
             }
         },
     ),
-    ENCHANT_ARMOR(
-        sumTo = TOTAL_ARMOR,
-        from = { MiningItems.currentArmor?.getFFData() ?: MiningFortuneData.armorTotalFF },
-        what = FortuneTypes.ENCHANT,
-        x4 = { MiningItems.currentArmor == null },
-        max = 5,
-    ),
     GEMSTONE_ARMOR(
-        TOTAL_ARMOR, { MiningItems.currentArmor?.getFFData() ?: MiningFortuneData.armorTotalFF },
+        TOTAL_ARMOR, { MiningItems.currentArmor?.getFortuneData() ?: MiningFortuneData.armorTotalMF },
         FortuneTypes.GEMSTONE,
         {
             when (MiningItems.currentArmor) {
-                MiningItems.HELMET, MiningItems.CHESTPLATE, MiningItems.LEGGINGS -> 20
-                MiningItems.BOOTS -> if (MiningFortuneData.usingSpeedBoots) 16 else 20
-                else -> if (MiningFortuneData.usingSpeedBoots) 76 else 80
+                MiningItems.HELMET, MiningItems.CHESTPLATE, MiningItems.LEGGINGS, MiningItems.BOOTS -> 100
+                else -> 400
             }
         },
     ),
-    TOTAL_PET(UNIVERSAL, { MiningItems.currentPet.getFFData() }, FortuneTypes.TOTAL),
+    TOTAL_PET(UNIVERSAL, { MiningItems.currentPet.getFortuneData() }, FortuneTypes.TOTAL),
     PET_BASE(
-        TOTAL_PET, { MiningItems.currentPet.getFFData() }, FortuneTypes.BASE,
+        TOTAL_PET, { MiningItems.currentPet.getFortuneData() }, FortuneTypes.BASE,
         {
             when (MiningItems.currentPet) {
-                MiningItems.ELEPHANT -> 150
-                MiningItems.MOOSHROOM_COW -> 158
-                MiningItems.BEE -> 30
-                MiningItems.SLUG -> 100
+                MiningItems.SCATHA -> 125
+//                 MiningItems.SNAIL ->
+//                 MiningItems.BAL ->
                 else -> 0
             }
         },
     ),
-    PET_ITEM(TOTAL_PET, { MiningItems.currentPet.getFFData() }, FortuneTypes.PET_ITEM, 60),
+    PET_ITEM(TOTAL_PET, { MiningItems.currentPet.getFortuneData() }, FortuneTypes.PET_ITEM, 50),
     TOTAL_EQUIP(
         sumTo = UNIVERSAL,
-        from = { MiningItems.currentEquip?.getFFData() ?: MiningFortuneData.equipmentTotalFF },
+        from = { MiningItems.currentEquip?.getFortuneData() ?: MiningFortuneData.equipmentTotalMF },
         what = FortuneTypes.TOTAL,
     ),
     BASE_EQUIP(
         sumTo = TOTAL_EQUIP,
-        from = { MiningItems.currentEquip?.getFFData() ?: MiningFortuneData.equipmentTotalFF },
+        from = { MiningItems.currentEquip?.getFortuneData() ?: MiningFortuneData.equipmentTotalMF },
         what = FortuneTypes.BASE,
         x4 = { MiningItems.currentEquip == null },
-        max = 5.0,
+        max = 10,
     ),
     ABILITY_EQUIP(
         sumTo = TOTAL_EQUIP,
-        from = { MiningItems.currentEquip?.getFFData() ?: MiningFortuneData.equipmentTotalFF },
+        from = { MiningItems.currentEquip?.getFortuneData() ?: MiningFortuneData.equipmentTotalMF },
         what = FortuneTypes.ABILITY,
         x4 = { MiningItems.currentEquip == null },
-        max = 15.0,
+        max = 6.25,
     ),
     REFORGE_EQUIP(
         sumTo = TOTAL_EQUIP,
-        from = { MiningItems.currentEquip?.getFFData() ?: MiningFortuneData.equipmentTotalFF },
+        from = { MiningItems.currentEquip?.getFortuneData() ?: MiningFortuneData.equipmentTotalMF },
         what = FortuneTypes.REFORGE,
         x4 = { MiningItems.currentEquip == null },
-        max = 15.0,
-    ),
-    ENCHANT_EQUIP(
-        sumTo = TOTAL_EQUIP,
-        from = { MiningItems.currentEquip?.getFFData() ?: MiningFortuneData.equipmentTotalFF },
-        what = FortuneTypes.ENCHANT,
-        x4 = { MiningItems.currentEquip == null },
-        max = { at.hannibal2.skyhanni.features.garden.GardenAPI.totalAmountVisitorsExisting.toDouble() / 4.0 },
+        max = 6,
     ),
     ;
 

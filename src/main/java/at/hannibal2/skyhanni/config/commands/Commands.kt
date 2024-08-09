@@ -593,6 +593,15 @@ object Commands {
     }
 
     @JvmStatic
+    fun openMiningGuide() {
+        if (!LorenzUtils.inSkyBlock) {
+            ChatUtils.userError("Join SkyBlock to open the fortune guide!")
+        } else {
+            UniversalGuideGUI.open(GuideType.MINING)
+        }
+    }
+
+    @JvmStatic
     fun openFarmingGuide() {
         if (!LorenzUtils.inSkyBlock) {
             ChatUtils.userError("Join SkyBlock to open the fortune guide!")

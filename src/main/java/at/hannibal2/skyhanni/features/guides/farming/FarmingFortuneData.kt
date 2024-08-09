@@ -144,7 +144,6 @@ object FarmingFortuneData {
 
     private fun getGenericFF(): Map<FortuneTypes, Double> = buildMap {
         val storage = GardenAPI.storage?.fortune ?: return emptyMap()
-        println(storage);
 
         this[FortuneTypes.SKILL_LEVEL] = storage.farmingLevel.toDouble() * 4
         this[FortuneTypes.BESTIARY] = storage.bestiary
@@ -163,13 +162,13 @@ object FarmingFortuneData {
         currentPetItem = FarmingItems.currentPet.getItem().getPetItem().toString()
 
         totalBaseFF = combineFFData(
-            baseFF, armorTotalFF, equipmentTotalFF, FarmingItems.currentPet.getFFData(),
+            baseFF, armorTotalFF, equipmentTotalFF, FarmingItems.currentPet.getFortuneData(),
         )
 
         UniversalGuideGUI.updateDisplay()
     }
 
-    fun List<FarmingItems>.getFFData(): Map<FortuneTypes, Double> = combineFFData(this.map { it.getFFData() })
+    fun List<FarmingItems>.getFFData(): Map<FortuneTypes, Double> = combineFFData(this.map { it.getFortuneData() })
 
     fun combineFFData(vararg value: Map<FortuneTypes, Double>) = combineFFData(value.toList())
     fun combineFFData(value: List<Map<FortuneTypes, Double>>) =

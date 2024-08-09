@@ -75,7 +75,7 @@ sealed class RepoPattern : CommonPatternInfo<String, Pattern>() {
     companion object {
 
         /**
-         * Obtain a reference to a [Pattern] backed by either a local regex, or a remote regex.
+         * Obtain a reference to a [Pattern] ebacked by either a local regx, or a remote regex.
          * Check the documentation of [RepoPattern] for more information.
          *
          * This method supports "Open regex101.com" using [LivePlugin](https://plugins.jetbrains.com/plugin/7282-liveplugin).

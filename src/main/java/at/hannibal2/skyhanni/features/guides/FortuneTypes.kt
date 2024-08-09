@@ -14,4 +14,5 @@ enum class FortuneTypes {
     COMMUNITY_SHOP,
     CAKE,
     PET_ITEM,
+    HOTM,
 }

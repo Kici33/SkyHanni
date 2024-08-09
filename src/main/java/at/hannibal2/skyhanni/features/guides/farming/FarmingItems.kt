@@ -123,7 +123,7 @@ enum class FarmingItems(
 
     private var ffData: Map<FortuneTypes, Double>? = null
 
-    fun getFFData() = ffData ?: run {
+    fun getFortuneData() = ffData ?: run {
         val data = ffCalculation(getItemOrNull())
         ffData = data
         data

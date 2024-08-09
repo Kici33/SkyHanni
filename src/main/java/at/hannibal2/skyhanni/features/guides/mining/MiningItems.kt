@@ -15,29 +15,20 @@ enum class MiningItems(
     val itemCategory: ItemCategory,
     private val ffCalculation: (ItemStack?) -> Map<FortuneTypes, Double> = { emptyMap() },
 ) {
-    WHEAT(ItemCategory.HOE),
-    CARROT(ItemCategory.HOE),
-    POTATO(ItemCategory.HOE),
-    NETHER_WART(ItemCategory.HOE),
-    PUMPKIN(ItemCategory.AXE),
-    MELON(ItemCategory.AXE),
-    COCOA_BEANS(ItemCategory.AXE),
-    SUGAR_CANE(ItemCategory.HOE),
-    CACTUS(ItemCategory.HOE),
-    MUSHROOM(ItemCategory.HOE),
-    HELMET(ItemCategory.HELMET, MiningFortuneData::getArmorFFData),
-    CHESTPLATE(ItemCategory.CHESTPLATE, MiningFortuneData::getArmorFFData),
-    LEGGINGS(ItemCategory.LEGGINGS, MiningFortuneData::getArmorFFData),
-    BOOTS(ItemCategory.BOOTS, MiningFortuneData::getArmorFFData),
-    NECKLACE(ItemCategory.NECKLACE, MiningFortuneData::getEquipmentFFData),
-    CLOAK(ItemCategory.CLOAK, MiningFortuneData::getEquipmentFFData),
-    BELT(ItemCategory.BELT, MiningFortuneData::getEquipmentFFData),
-    BRACELET(ItemCategory.BRACELET, MiningFortuneData::getEquipmentFFData),
-    ELEPHANT(ItemCategory.PET, MiningFortuneData::getPetFFData),
-    MOOSHROOM_COW(ItemCategory.PET, MiningFortuneData::getPetFFData),
-    RABBIT(ItemCategory.PET, MiningFortuneData::getPetFFData),
-    BEE(ItemCategory.PET, MiningFortuneData::getPetFFData),
-    SLUG(ItemCategory.PET, MiningFortuneData::getPetFFData),
+    HELMET(ItemCategory.HELMET, MiningFortuneData::getArmorMFData),
+    CHESTPLATE(ItemCategory.CHESTPLATE, MiningFortuneData::getArmorMFData),
+    LEGGINGS(ItemCategory.LEGGINGS, MiningFortuneData::getArmorMFData),
+    BOOTS(ItemCategory.BOOTS, MiningFortuneData::getArmorMFData),
+
+    NECKLACE(ItemCategory.NECKLACE, MiningFortuneData::getEquipmentMFData),
+    CLOAK(ItemCategory.CLOAK, MiningFortuneData::getEquipmentMFData),
+    BELT(ItemCategory.BELT, MiningFortuneData::getEquipmentMFData),
+    BRACELET(ItemCategory.BRACELET, MiningFortuneData::getEquipmentMFData),
+
+    SCATHA(ItemCategory.PET, MiningFortuneData::getPetMFData),
+    GLACITE_GOLEM(ItemCategory.PET, MiningFortuneData::getPetMFData),
+    BAL(ItemCategory.PET, MiningFortuneData::getPetMFData),
+    SNAIL(ItemCategory.PET, MiningFortuneData::getPetMFData)
     ;
 
     var selectedState = false
@@ -49,8 +40,8 @@ enum class MiningItems(
         ItemStack(Blocks.barrier).setStackDisplayName(name)
     }
 
-    fun getItemOrNull() = ProfileStorageData.profileSpecific?.mining?.fortune?.farmingItems?.get(this)
-    fun setItem(value: ItemStack) = ProfileStorageData.profileSpecific?.garden?.fortune?.farmingItems?.set(this, value)
+    fun getItemOrNull() = ProfileStorageData.profileSpecific?.mining?.fortune?.miningItems?.get(this)
+    fun setItem(value: ItemStack) = ProfileStorageData.profileSpecific?.mining?.fortune?.miningItems?.set(this, value)
 
     private fun onClick(): () -> Unit = when (this) {
         in armor -> {
@@ -85,7 +76,7 @@ enum class MiningItems(
                 pets.forEach {
                     it.selectedState = it == currentPet
                 }
-                MiningFortuneData.getTotalFF()
+                MiningFortuneData.getTotalMF()
             }
         }
 
@@ -123,7 +114,7 @@ enum class MiningItems(
 
     private var ffData: Map<FortuneTypes, Double>? = null
 
-    fun getFFData() = ffData ?: run {
+    fun getFortuneData() = ffData ?: run {
         val data = ffCalculation(getItemOrNull())
         ffData = data
         data
@@ -132,7 +123,7 @@ enum class MiningItems(
     companion object {
 
         // TODO
-        var lastEquippedPet = ELEPHANT
+        var lastEquippedPet = SCATHA
 
         var currentPet: MiningItems = lastEquippedPet
         var currentArmor: MiningItems? = null
@@ -140,7 +131,7 @@ enum class MiningItems(
 
         val armor = listOf(HELMET, CHESTPLATE, LEGGINGS, BOOTS)
         val equip = listOf(NECKLACE, CLOAK, BELT, BRACELET)
-        val pets = listOf(ELEPHANT, MOOSHROOM_COW, RABBIT, BEE, SLUG)
+        val pets = listOf(SCATHA, BAL)
 
         fun getArmorDisplay(clickEnabled: Boolean = false): List<Renderable> = armor.map { it.getDisplay(clickEnabled) }
 
@@ -152,7 +143,7 @@ enum class MiningItems(
             entries.filterNot { pets.contains(it) }.forEach { it.selectedState = false }
         }
 
-        fun resetFFData() {
+        fun resetMFData() {
             entries.forEach { it.ffData = null }
         }
 
