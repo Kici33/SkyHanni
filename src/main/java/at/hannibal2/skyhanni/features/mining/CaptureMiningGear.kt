@@ -1,6 +1,5 @@
 package at.hannibal2.skyhanni.features.mining
 
-import at.hannibal2.skyhanni.config.ConfigUpdaterMigrator
 import at.hannibal2.skyhanni.config.storage.ProfileSpecificStorage
 import at.hannibal2.skyhanni.data.PetAPI
 import at.hannibal2.skyhanni.data.ProfileStorageData
@@ -20,7 +19,6 @@ import at.hannibal2.skyhanni.utils.LorenzUtils
 import at.hannibal2.skyhanni.utils.NumberUtil.romanToDecimalIfNecessary
 import at.hannibal2.skyhanni.utils.RegexUtils.matchMatcher
 import at.hannibal2.skyhanni.utils.SimpleTimeMark.Companion.fromNow
-import at.hannibal2.skyhanni.utils.SkyBlockItemModifierUtils.getEnchantments
 import at.hannibal2.skyhanni.utils.StringUtils.removeColor
 import at.hannibal2.skyhanni.utils.repopatterns.RepoPattern
 import net.minecraft.item.ItemStack
@@ -61,12 +59,9 @@ object CaptureMiningGear {
     // TODO update armor on equipment/wardrobe update as well
     fun captureMiningGear() {
         for (armor in InventoryUtils.getArmor()) {
-            println(armor?.getInternalName()?.asString())
             if (armor == null) continue
             val split = armor.getInternalName().asString().split("_")
-            println(split.first())
             if (split.first() in miningSets) {
-                println(armor.getItemCategoryOrNull())
                 val category = armor.getItemCategoryOrNull() ?: continue
                 MiningItems.getFromItemCategoryOne(category)?.setItem(armor)
             }
@@ -155,7 +150,6 @@ object CaptureMiningGear {
                 item.setItem(slot)
                 outdatedItems[item] = false
                 MiningFortuneDisplay.loadFortuneLineData(slot)
-                val enchantments = slot.getEnchantments() ?: emptyMap()
             }
         }
     }

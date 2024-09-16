@@ -41,9 +41,6 @@ object MiningFortuneDisplay {
                 gemstoneFortune = groupOrNull("gemstone")?.toDouble() ?: 0.0
                 itemBaseFortune = displayedFortune - reforgeFortune - gemstoneFortune
             } ?: continue
-
-
-
         }
     }
 

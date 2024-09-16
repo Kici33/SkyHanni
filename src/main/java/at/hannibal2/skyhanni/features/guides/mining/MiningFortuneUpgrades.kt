@@ -1,9 +1,10 @@
-package at.hannibal2.skyhanni.features.guides.farming
+package at.hannibal2.skyhanni.features.guides.mining
 
 import at.hannibal2.skyhanni.api.ReforgeAPI
 import at.hannibal2.skyhanni.data.CropAccessoryData
 import at.hannibal2.skyhanni.data.GardenCropMilestones
 import at.hannibal2.skyhanni.data.GardenCropMilestones.getCounter
+import at.hannibal2.skyhanni.data.ProfileStorageData
 import at.hannibal2.skyhanni.data.model.SkyblockStat
 import at.hannibal2.skyhanni.features.garden.CropAccessory
 import at.hannibal2.skyhanni.features.garden.CropType
@@ -17,40 +18,20 @@ import at.hannibal2.skyhanni.utils.ItemUtils.getItemRarityOrCommon
 import at.hannibal2.skyhanni.utils.ItemUtils.itemName
 import at.hannibal2.skyhanni.utils.LorenzRarity
 import at.hannibal2.skyhanni.utils.NEUItems.getPrice
-import at.hannibal2.skyhanni.utils.NumberUtil.addSuffix
 import at.hannibal2.skyhanni.utils.SkyBlockItemModifierUtils.getEnchantments
 import at.hannibal2.skyhanni.utils.SkyBlockItemModifierUtils.getFarmingForDummiesCount
 import at.hannibal2.skyhanni.utils.SkyBlockItemModifierUtils.getReforgeName
 import at.hannibal2.skyhanni.utils.SkyBlockItemModifierUtils.isRecombobulated
 import net.minecraft.item.ItemStack
 
-object FarmingFortuneUpgrades {
-
-    private val axeCrops = listOf(CropType.MELON, CropType.PUMPKIN, CropType.COCOA_BEANS)
+object MiningFortuneUpgrades {
 
     val genericUpgrades = mutableListOf<FortuneUpgrade>()
     val cropSpecificUpgrades = mutableListOf<FortuneUpgrade>()
 
     fun generateGenericUpgrades() {
-        val storage = GardenAPI.storage?.fortune ?: return
+        val storage = ProfileStorageData.profileSpecific?.mining?.fortune;
         genericUpgrades.clear()
-
-        if (storage.plotsUnlocked != -1 && storage.plotsUnlocked != 24) {
-            genericUpgrades.add(
-                FortuneUpgrade(
-                    "§7Unlock your ${(storage.plotsUnlocked + 1).addSuffix()} §7plot",
-                    null, "COMPOST", compostNeeded[storage.plotsUnlocked], 3.0
-                )
-            )
-        }
-        if (storage.anitaUpgrade != -1 && storage.anitaUpgrade != 15) {
-            genericUpgrades.add(
-                FortuneUpgrade(
-                    "§7Upgrade Anita bonus to level ${storage.anitaUpgrade + 1}",
-                    null, "JACOBS_TICKET", anitaTicketsNeeded[storage.anitaUpgrade], 4.0
-                )
-            )
-        }
 
         getEquipmentUpgrades()
         getPetUpgrades()
@@ -93,7 +74,7 @@ object FarmingFortuneUpgrades {
 
     private fun getEquipmentUpgrades() {
         val visitors = GardenAPI.storage?.uniqueVisitors?.toDouble() ?: 0.0
-        for (piece in FarmingItems.equip) {
+        for (piece in MiningItems.equip) {
             val item = piece.getItem() ?: return
             // todo tell them to buy the missing item
             if (!item.getInternalName().contains("LOTUS")) return
@@ -125,7 +106,7 @@ object FarmingFortuneUpgrades {
     // todo adding armor tier upgrades later
 
     private fun getArmorUpgrades() {
-        for (piece in FarmingItems.armor) {
+        for (piece in MiningItems.armor) {
             val item = piece.getItemOrNull() ?: return // todo tell them to buy it later
 
             recombobulateItem(item, genericUpgrades)
@@ -143,8 +124,8 @@ object FarmingFortuneUpgrades {
 
     // todo needs to be called when switching pets
     private fun getPetUpgrades() {
-        if (FarmingItems.currentPet.getItemOrNull()?.getInternalName()?.contains(";") == true) {
-            when (FarmingFortuneData.currentPetItem) {
+        if (MiningItems.currentPet.getItemOrNull()?.getInternalName()?.contains(";") == true) {
+            when (MiningFortuneData.currentPetItem) {
                 "GREEN_BANDANA" -> {}
                 "YELLOW_BANDANA" -> {
                     // todo once auction stuff is done

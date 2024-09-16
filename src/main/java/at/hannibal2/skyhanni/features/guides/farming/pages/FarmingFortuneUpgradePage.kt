@@ -1,7 +1,7 @@
 package at.hannibal2.skyhanni.features.guides.farming.pages
 
 import at.hannibal2.skyhanni.features.garden.CropType
-import at.hannibal2.skyhanni.features.guides.farming.FarmingFortuneUpgrade
+import at.hannibal2.skyhanni.features.guides.FortuneUpgrade
 import at.hannibal2.skyhanni.features.guides.farming.FarmingFortuneUpgrades
 import at.hannibal2.skyhanni.features.guides.farming.FarmingItems
 import at.hannibal2.skyhanni.utils.ItemUtils.itemName
@@ -54,7 +54,7 @@ class FarmingFortuneUpgradePage(val crop0: () -> CropType?, sizeX: Int, sizeY: I
         )
     }
 
-    private fun FarmingFortuneUpgrade.print() = buildList {
+    private fun FortuneUpgrade.print() = buildList {
         add(
             Renderable.wrappedString(
                 description,
@@ -87,7 +87,7 @@ class FarmingFortuneUpgradePage(val crop0: () -> CropType?, sizeX: Int, sizeY: I
         ) // TODO cleaner formating
         add(
             Renderable.string(
-                "§6" + costPerFF?.shortFormat(),
+                "§6" + costPerFortune?.shortFormat(),
                 horizontalAlign = HorizontalAlignment.CENTER,
                 verticalAlign = VerticalAlignment.CENTER
             )

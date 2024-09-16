@@ -92,8 +92,6 @@ class MiningFortuneOverviewPage(sizeX: Int, sizeY: Int, paddingX: Int = 15, padd
             ),
         )
 
-
-
         content.addTable(
             3,
             MiningFortuneInfos.REFORGE_ARMOR.bar(
@@ -102,7 +100,6 @@ class MiningFortuneOverviewPage(sizeX: Int, sizeY: Int, paddingX: Int = 15, padd
                 else "§7§2Reforge fortune from your\n$armorName",
             ),
         )
-
 
         content.addTable(
             4,
